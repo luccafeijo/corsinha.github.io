@@ -84,6 +84,16 @@ function updateGameArea() {
     myGameArea.clear();
     myGamePiece.moveAngle = 0;
     myGamePiece.speed = 0;
+    
+    movementbyarrows();
+
+    movementbywasd();
+
+    myGamePiece.newPos();
+    myGamePiece.update();
+}
+
+function movementbyarrows() {
     //move para a esquerda
     if (myGameArea.keys && myGameArea.keys[37]) {
         if (myGameArea.keys[38]) {
@@ -102,11 +112,52 @@ function updateGameArea() {
     }
 
     //move para frente
-    if (myGameArea.keys && myGameArea.keys[38]) {myGamePiece.speed= 1; }
+    if (myGameArea.keys && myGameArea.keys[38]) {
+        if (checkturbo()) {
+            myGamePiece.speed= 4;
+        } else {
+            myGamePiece.speed= 2;
+        }
+    }
     //move para trás
     if (myGameArea.keys && myGameArea.keys[40]) {myGamePiece.speed= -1; }
-    myGamePiece.newPos();
-    myGamePiece.update();
+}
+
+function movementbywasd() {
+    //move para a esquerda
+    if (myGameArea.keys && myGameArea.keys[65]) {
+        if (myGameArea.keys[87]) {
+            myGamePiece.moveAngle = -1;
+        } else if (myGameArea.keys[83]) {
+            myGamePiece.moveAngle = 1;
+        }
+    }
+    //move para a direita
+    if (myGameArea.keys && myGameArea.keys[68]) {
+        if (myGameArea.keys[87]) {
+            myGamePiece.moveAngle = 1;
+        } else if (myGameArea.keys[83]) {
+            myGamePiece.moveAngle = -1;
+        }
+    }
+
+    //move para frente
+    if (myGameArea.keys && myGameArea.keys[87]) {
+        if (checkturbo()) {
+            myGamePiece.speed= 4;
+        } else {
+            myGamePiece.speed= 2;
+        }
+    }
+    //move para trás
+    if (myGameArea.keys && myGameArea.keys[83]) {myGamePiece.speed= -1; }
+}
+
+function checkturbo() {
+    if (myGameArea.keys && myGameArea.keys[16]) {
+        return true;
+    }
+    return false;
 }
 </script>
 </body>
